@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liudehuang.open.api.dao.AppDao">
+
+    <resultMap id="appMap" type="com.liudehuang.open.api.entity.AppEntity">
+        <result property="id" column="id"/>
+        <result property="appId" column="app_id"/>
+        <result property="appName" column="app_name"/>
+        <result property="appSecret" column="app_secret"/>
+        <result property="accessToken" column="access_token"/>
+        <result property="isFlag" column="is_flag"/>
+    </resultMap>
+    <select id="findApp" resultMap="appMap" parameterType="com.liudehuang.open.api.entity.AppEntity">
+        SELECT
+          id,
+          app_name,
+          app_id,
+          app_secret,
+          is_flag,
+          access_token
+        from m_app
+		where app_id=#{appId} and app_secret=#{appSecret}
+    </select>
+
+    <update id="updateAccessToken" parameterType="string">
+         update m_app set access_token =#{accessToken} where app_id=#{appId}
+    </update>
+</mapper>
